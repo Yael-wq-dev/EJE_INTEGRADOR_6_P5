@@ -1,53 +1,80 @@
 let faceMesh;
 let video;
 let faces = [];
-let options = { maxFaces: 1, refineLandmarks: false, flipHorizontal: false };
+let options = {
+  maxFaces: 1,
+  refineLandmarks: false,
+  flipHorizontal: false
+};
+
 let triangles;
 
 function preload() {
-  // Load the faceMesh model
+ 
   faceMesh = ml5.faceMesh(options);
 }
 
 function setup() {
   createCanvas(640, 480);
-  // Create the webcam video and hide it
+
+
   video = createCapture(VIDEO);
   video.size(640, 480);
   video.hide();
-  // Load the triangle indices for drawing the mesh
+
   triangles = faceMesh.getTriangles();
-  // Start detecting faces from the webcam video
   faceMesh.detectStart(video, gotFaces);
 }
 
 function draw() {
-  // Draw the webcam video
+
   image(video, 0, 0, width, height);
 
-  // Draw all the triangles
   for (let i = 0; i < faces.length; i++) {
+
     let face = faces[i];
     for (let j = 0; j < triangles.length; j++) {
+
       let indices = triangles[j];
+
       let pointAIndex = indices[0];
       let pointBIndex = indices[1];
       let pointCIndex = indices[2];
+
       let pointA = face.keypoints[pointAIndex];
       let pointB = face.keypoints[pointBIndex];
       let pointC = face.keypoints[pointCIndex];
 
       noFill();
+<<<<<<< HEAD
       stroke(0);
       strokeWeight(0.25);
       triangle(pointA.x, pointA.y, pointB.x, pointB.y, pointC.x, pointC.y);
       circle(pointA.x,pointA.y,10);
+=======
+      stroke(0, 0, 0);
+      strokeWeight(0);
+
+      triangle(
+        pointA.x, pointA.y,
+        pointB.x, pointB.y,
+        pointC.x, pointC.y
+      );
+>>>>>>> a9f15f3a7978db6635eb581abfce779623af46d9
     }
+
+    let nariz = face.keypoints[5];
+
+    fill(255, 0, 0); // rojo
+    noStroke();
+    circle(nariz.x, nariz.y, 20);
   }
 }
 
-// Callback function for when faceMesh outputs data
 function gotFaces(results) {
+<<<<<<< HEAD
   // Save the output to the faces variable s 
+=======
+>>>>>>> a9f15f3a7978db6635eb581abfce779623af46d9
   faces = results;
 }
